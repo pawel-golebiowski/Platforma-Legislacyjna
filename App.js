@@ -1,20 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useState } from "react";
+import { EmptyPage } from "./source/EmptyPage";
+import { LoginPage } from "./source/LoginPage";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const [isLogged, setIsLogged] = React.useState(false);
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {isLogged ? (
+          <Stack.Screen name="Home" component={LoginPage}></Stack.Screen>
+        ) : (
+          <Stack.Screen name="Home" options={{ headerShown: false }}>
+            {(props) => (
+              <LoginPage {...props} setIsLoggedFunction={setIsLogged} />
+            )}
+          </Stack.Screen>
+        )}
+        <Stack.Screen
+          name="Profile"
+          options={{ headerShown: false }}
+          component={EmptyPage}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
