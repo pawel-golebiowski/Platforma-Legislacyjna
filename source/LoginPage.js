@@ -5,18 +5,24 @@ import { TextInput } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { testfunc1, setUserId } from "../shared/redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export function LoginPage(props) {
+  const userId = useSelector((state) => state.userReducer.userId);
+  const dispatch = useDispatch();
+
   let tryToLogin = () => {
     props.setIsLoggedFunction(true);
+    console.log(userId);
   };
 
   let contactAdministrator = () => {
-    console.log("click2");
+    console.log("Contact administrator form button!");
+    dispatch(setUserId(4));
   };
   const [login, onChangeLogin] = React.useState("");
   const [password, onChangePassword] = React.useState("");
-  const [userId, setUserId] = React.useState();
 
   return (
     <View style={styles.container}>

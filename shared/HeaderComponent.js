@@ -20,7 +20,6 @@ export class HeaderComponent extends React.Component {
       <>
         <Header
           style={styles.header}
-          //   leftComponent={{ icon: "menu", color: "#fff" }}
           centerComponent={{ text: "My Title" }}
           rightComponent={{
             icon: "logout",
