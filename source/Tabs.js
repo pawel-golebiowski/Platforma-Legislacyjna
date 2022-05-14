@@ -1,40 +1,52 @@
 import * as React from "react";
-import { Text, View } from "react-native";
-import { Button } from "react-native-web";
+import { Text, SafeAreaView, View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function TestScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Testing!</Text>
-    </View>
-  );
-}
+import { Icon } from "react-native-elements";
+import { HeaderComponent } from "../shared/HeaderComponent";
+import { CalendarTab } from "./Tabs/CalendarTab";
+import { FAQTab } from "./Tabs/FAQTab";
+import { ApplicationsHomeScreen } from "./Tabs/ApplicationsTabs/ApplicationsHomeScreen";
+import { ForumHomeScreen } from "./Tabs/ForumTabs/ForumHomeScreen";
 
 const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-      <Tab.Screen name="TestScreen" component={TestScreen} />
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        headerRight: (
+          <View style={styles.iconContainer}>
+            <Icon type="ionicon" name="md-heart"></Icon>
+          </View>
+        ),
+      }}
+    >
+      <Tab.Screen name="Applications" component={ApplicationsHomeScreen} />
+      <Tab.Screen name="Forum" component={ForumHomeScreen} />
+      <Tab.Screen name="Calendar" component={CalendarTab} />
+      <Tab.Screen name="FAQ" component={FAQTab} />
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignSelf: "flex-start",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  icon: {
+    paddingLeft: 10,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: 120,
+  },
+});
