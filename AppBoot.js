@@ -4,22 +4,26 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Tab } from "react-native-elements";
 import Tabs from "./source/Tabs";
+import { useSelector } from "react-redux";
+import { LoginPage } from "./source/LoginPage";
+import { EmptyPage } from "./source/EmptyPage";
 
-const Stack = createNativeStackNavigator();
-// const [isLogged, setIsLogged] = React.useState(false);
+export const AppBoot = () => {
+  const Stack = createNativeStackNavigator();
+  const isLogged = useSelector((state) => state.userReducer.isLogged);
 
-export class AppBoot extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <>
-        <NavigationContainer>
+  return (
+    <>
+      <NavigationContainer>
+        {isLogged ? (
           <Tabs />
-        </NavigationContainer>
-      </>
-    );
-  }
-}
+        ) : (
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={LoginPage}></Stack.Screen>
+            <Stack.Screen name="Profile" component={EmptyPage}></Stack.Screen>
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+    </>
+  );
+};

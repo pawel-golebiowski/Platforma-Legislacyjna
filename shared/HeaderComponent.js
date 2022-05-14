@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Header } from "react-native-elements";
 import { Text, StyleSheet } from "react-native";
+import { useDispatch } from "react-redux";
+import { logout } from "./redux/actions";
 
 const styles = StyleSheet.create({
   header: {
@@ -10,24 +12,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export class HeaderComponent extends React.Component {
-  handleLogout() {
-    console.log("logout");
-  }
+export function HeaderComponent(props) {
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <>
-        <Header
-          style={styles.header}
-          centerComponent={{ text: "My Title" }}
-          rightComponent={{
-            icon: "logout",
-            color: "#fff",
-            onPress: this.handleLogout,
-          }}
-        ></Header>
-      </>
-    );
-  }
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  return (
+    <>
+      <Header
+        style={styles.header}
+        centerComponent={{ text: "My Title" }}
+        rightComponent={{
+          icon: "logout",
+          color: "#fff",
+          onPress: handleLogout,
+        }}
+      ></Header>
+    </>
+  );
 }

@@ -13,14 +13,3 @@ export const logout = () =>{
     type: LOGOUT_USER
   }
 }
-
-
-// export const setUserId = (id) => {
-//   console.log("user id: " + id);
-//   (dispatch) => {
-//     dispatch({
-//       type: SET_USER_ID,
-//       payload: id,
-//     });
-//   };
-// };

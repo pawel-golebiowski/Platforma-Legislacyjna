@@ -5,16 +5,16 @@ import { TextInput } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { testfunc1, setUserId } from "../shared/redux/actions";
+import { setUserId } from "../shared/redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
-export function LoginPage(props) {
+export function LoginPage() {
   const userId = useSelector((state) => state.userReducer.userId);
   const dispatch = useDispatch();
+  const isLogged = useSelector((state) => state.userReducer.isLogged);
 
   let tryToLogin = () => {
-    props.setIsLoggedFunction(true);
-    console.log(userId);
+    dispatch(setUserId(4));
   };
 
   let contactAdministrator = () => {
