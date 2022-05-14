@@ -1,2 +1,2 @@
 # Platforma-Legislacyjna
-Technologia React-Native
+Technology React-Native
