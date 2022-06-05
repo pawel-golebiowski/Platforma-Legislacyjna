@@ -10,12 +10,12 @@ import { EmptyPage } from "./source/EmptyPage";
 
 export const AppBoot = () => {
   const Stack = createNativeStackNavigator();
-  const isLogged = useSelector((state) => state.userReducer.isLogged);
+  const userId = useSelector((state) => state.userReducer.userId);
 
   return (
     <>
       <NavigationContainer>
-        {isLogged ? (
+        {userId ? (
           <Tabs />
         ) : (
           <Stack.Navigator screenOptions={{ headerShown: false }}>

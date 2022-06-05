@@ -6,7 +6,7 @@ export function ForumHomeScreen() {
   return (
     <>
       <View style={styles.container}>
-        <HeaderComponent />
+        <HeaderComponent title="Forum" />
         <Text>ForumHomeScree111n</Text>
       </View>
     </>

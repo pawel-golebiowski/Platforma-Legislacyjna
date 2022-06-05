@@ -6,13 +6,12 @@ export function ApplicationsHomeScreen() {
   return (
     <>
       <View style={styles.container}>
-        <HeaderComponent />
+        <HeaderComponent title="Applications Screen" />
         <Text>ApplicatioasdasnsHomeScreen</Text>
       </View>
     </>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
