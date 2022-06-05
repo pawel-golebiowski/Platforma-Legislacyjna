@@ -15,11 +15,6 @@ export default function Tabs() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        headerRight: (
-          <View style={styles.iconContainer}>
-            <Icon type="ionicon" name="md-heart"></Icon>
-          </View>
-        ),
       }}
     >
       <Tab.Screen name="Applications" component={ApplicationsHomeScreen} />

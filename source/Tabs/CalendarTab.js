@@ -6,7 +6,7 @@ export function CalendarTab() {
   return (
     <>
       <View style={styles.container}>
-        <HeaderComponent />
+        <HeaderComponent title="Calendar" />
         <Text>Calendar Tab</Text>
       </View>
     </>
@@ -14,7 +14,6 @@ export function CalendarTab() {
 }
 
 const styles = StyleSheet.create({
- 
   container: {
     flex: 1,
     backgroundColor: "#fff",

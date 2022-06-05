@@ -6,7 +6,11 @@ export function FAQTab() {
   return (
     <>
       <View style={styles.container}>
-        <HeaderComponent />
+        <HeaderComponent title="FAQ" />
+        <Text>FAQ Tab</Text>
+        <Text>FAQ Tab</Text>
+        <Text>FAQ Tab</Text>
+        <Text>FAQ Tab</Text>
         <Text>FAQ Tab</Text>
       </View>
     </>

@@ -1,17 +1,53 @@
 import { combineReducers } from "redux";
-import { LOGIN_USER, LOGOUT_USER } from "./actions";
+import { LOGIN_USER, LOGOUT_USER, GET_API } from "./actions";
 
-const initialState = {
-  isLogged: false,
-  userId: 0,
+const apiUrl = {
+  url: "http://0473-157-158-168-178.ngrok.io",
 };
 
-const userReducer = (state = initialState, action) => {
+const urlReducer = (state = apiUrl, action) => {
+  switch (action.type) {
+    case GET_API:
+      return state;
+    default:
+      return state;
+  }
+};
+
+const userInitState = {
+  isLogged: false,
+  userId: 0,
+  email: "",
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  token: "",
+};
+
+const userReducer = (state = userInitState, action) => {
   switch (action.type) {
     case LOGIN_USER:
-      return { ...state, userId: action.payload, isLogged: true };
+      return {
+        ...state,
+        isLogged: true,
+        userId: action.payload_id,
+        email: action.payload_email,
+        firstName: action.payload_firstName,
+        lastName: action.payload_lastName,
+        phoneNumber: action.payload_phoneNumber,
+        token: action.payload_token,
+      };
     case LOGOUT_USER:
-      return { ...state, userId: 0, isLogged: false };
+      return {
+        ...state,
+        isLogged: false,
+        userId: 0,
+        email: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        token: "",
+      };
     default:
       return state;
   }
@@ -19,6 +55,7 @@ const userReducer = (state = initialState, action) => {
 
 const allReducer = combineReducers({
   userReducer: userReducer,
+  urlReducer: urlReducer,
 });
 
 export default allReducer;
