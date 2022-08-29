@@ -1,8 +1,13 @@
 import { combineReducers } from "redux";
-import { LOGIN_USER, LOGOUT_USER, GET_API } from "./actions";
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  GET_API,
+  UPDATE_APPLICATIONS,
+} from "./actions";
 
 const apiUrl = {
-  url: "http://fd72-157-158-168-178.ngrok.io",
+  url: "http://16e9-157-158-168-178.ngrok.io",
 };
 
 const urlReducer = (state = apiUrl, action) => {
@@ -53,9 +58,21 @@ const userReducer = (state = userInitState, action) => {
   }
 };
 
+const applicationInitState = {};
+
+const applicationReducer = (state = applicationInitState, action) => {
+  switch (action.type) {
+    case UPDATE_APPLICATIONS:
+      return { ...state, applications: action.applications };
+    default:
+      return state;
+  }
+};
+
 const allReducer = combineReducers({
   userReducer: userReducer,
   urlReducer: urlReducer,
+  applicationReducer: applicationReducer,
 });
 
 export default allReducer;

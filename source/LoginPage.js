@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { setUser, getApiUrl } from "../shared/redux/actions";
+import { setUser, updateApplications } from "../shared/redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 export function LoginPage() {
@@ -18,11 +16,11 @@ export function LoginPage() {
 
   const testUrlApi = "https://reqres.in/api/posts";
   const apiUrl = useSelector((state) => state.urlReducer.url);
+  const getApplicationsUrl = apiUrl + "/api/Application/getApplications";
   const loginUrl = apiUrl + "/api/Authentication/login";
 
   let tryToLogin = () => {
-    console.log("operation id: " + Math.floor(Math.random() * 1000000));
-    console.log("tryToLogin method");
+    console.log("tryToLogin method id: " + Math.floor(Math.random() * 1000000));
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,10 +34,15 @@ export function LoginPage() {
           setErrorMsg("Incorrect email or password");
           setSuggetsionMsg("Enter correct data or contact administrator");
         } else {
-          // console.log(responseData);
           setErrorMsg("");
           setSuggetsionMsg("");
           dispatch(setUser(responseData));
+
+          fetch(getApplicationsUrl)
+            .then((response) => response.json())
+            .then((applicationData) => {
+              dispatch(updateApplications(applicationData));
+            });
         }
       })
       .catch((error) => {

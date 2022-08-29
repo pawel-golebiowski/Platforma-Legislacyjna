@@ -9,17 +9,8 @@ import { Icon } from "react-native-elements";
 export function ApplicationsHomeScreen({ navigation }) {
   let self = this;
   const apiUrl = useSelector((state) => state.urlReducer.url);
-  const getApplicationsUrl = apiUrl + "/api/Application/getApplications";
-  const [applications, setApplications] = useState([]);
-
-  let getApplications = () => {
-    fetch(getApplicationsUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        setApplications(data);
-      });
-  };
-  getApplications();
+  let applications = [];
+  applications = useSelector((state) => state.applicationReducer.applications);
 
   let addNewApplication = () => {
     navigation.navigate("AddApplication");
@@ -34,6 +25,7 @@ export function ApplicationsHomeScreen({ navigation }) {
     applications.map((record) => {
       return recordApplications.push(
         <Pressable
+          key={record.id}
           onPress={() => {
             openApplication(record.id);
           }}

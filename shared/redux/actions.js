@@ -1,6 +1,7 @@
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_API = "GET_API";
+export const UPDATE_APPLICATIONS = "UPDATE_APPLICATIONS";
 
 export const setUser = (userData) => {
   return {
@@ -11,6 +12,13 @@ export const setUser = (userData) => {
     payload_lastName: userData.lastName,
     payload_phoneNumber: userData.phoneNumber,
     payload_token: userData.token,
+  };
+};
+
+export const updateApplications = (applications) => {
+  return {
+    type: UPDATE_APPLICATIONS,
+    applications: applications,
   };
 };
 
