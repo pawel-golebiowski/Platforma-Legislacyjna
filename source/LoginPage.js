@@ -26,8 +26,8 @@ export function LoginPage() {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // body: JSON.stringify({ email: email, password: password }),
-      body: JSON.stringify({ email: "ewa@gmail.com", password: "aA12345678" }),
+      body: JSON.stringify({ email: email, password: password }),
+      // body: JSON.stringify({ email: "ewa@gmail.com", password: "aA12345678" }),
     };
     fetch(loginUrl, requestOptions)
       .then((response) => response.json())
@@ -36,7 +36,7 @@ export function LoginPage() {
           setErrorMsg("Incorrect email or password");
           setSuggetsionMsg("Enter correct data or contact administrator");
         } else {
-          console.log(responseData);
+          // console.log(responseData);
           setErrorMsg("");
           setSuggetsionMsg("");
           dispatch(setUser(responseData));

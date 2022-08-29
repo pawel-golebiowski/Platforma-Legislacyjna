@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { LOGIN_USER, LOGOUT_USER, GET_API } from "./actions";
 
 const apiUrl = {
-  url: "http://0473-157-158-168-178.ngrok.io",
+  url: "http://fd72-157-158-168-178.ngrok.io",
 };
 
 const urlReducer = (state = apiUrl, action) => {
