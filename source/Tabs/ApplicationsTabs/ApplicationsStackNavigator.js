@@ -3,6 +3,7 @@ import { ApplicationDetails } from "./ApplicationDetails";
 import { ApplicationsHomeScreen } from "./ApplicationsHomeScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { AddApplication } from "./AddApplication";
+import { ApplicationComments } from "./ApplicationComments";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,8 +15,12 @@ export function ApplicationsStackNavigator() {
         name="ApplicationsList"
         component={ApplicationsHomeScreen}
       />
-      <Stack.Screen name="ApplicationDetails" component={ApplicationDetails} />
-      <Stack.Screen name="AddApplication" component={AddApplication} />
+      <Stack.Screen name="Application Details" component={ApplicationDetails} />
+      <Stack.Screen name="Add Application" component={AddApplication} />
+      <Stack.Screen
+        name="Application Comments"
+        component={ApplicationComments}
+      />
     </Stack.Navigator>
   );
 }

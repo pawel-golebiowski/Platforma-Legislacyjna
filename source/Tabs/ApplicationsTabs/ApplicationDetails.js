@@ -1,73 +1,110 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import { HeaderComponent } from "../../../shared/HeaderComponent";
 import { Icon } from "react-native-elements";
+import { useSelector } from "react-redux";
 
 export function ApplicationDetails({ navigation, route }) {
-  const { id } = route.params;
-  const [agreeSelected, setSelected] = useState("123");
+  const apiUrl = useSelector((state) => state.urlReducer.url);
+  const userToken = useSelector((state) => state.userReducer.token);
 
+  const application = { ...route.params.applicationObj };
+
+  const voteApiUrl = apiUrl + "/api/Vote/voteForApplication";
+  console.log(voteApiUrl);
+
+  const [agreeSelected, setSelected] = useState(undefined);
   let submitVote = () => {
+    if (agreeSelected === undefined) {
+      alert("To submit your voting please select your choice");
+    } else {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + userToken,
+          Accept: "application/json",
+        },
+
+        body: JSON.stringify({
+          applicationId: application.id,
+          vote: agreeSelected,
+        }),
+      };
+
+      fetch(voteApiUrl, requestOptions);
+    }
     console.log("submit!");
     console.log("Your choice:", agreeSelected);
+  };
+
+  let openApplicationComment = (_id) => {
+    navigation.navigate("Application Comments", {
+      applicationObj: application,
+    });
+  };
+
+  let showsAgreebutton = () => {
+    if (agreeSelected) {
+      return <Icon name="radio-button-checked" />;
+    } else {
+      return <Icon name="radio-button-unchecked" />;
+    }
+  };
+
+  let showDisagreebutton = () => {
+    console.log("agreeSelected : ", agreeSelected);
+    if (agreeSelected === false) {
+      return <Icon name="radio-button-checked" />;
+    } else {
+      return <Icon name="radio-button-unchecked" />;
+    }
   };
 
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.segmentCenter}>
-          <Text style={styles.textBold}>Tłumaczenie Lorem ipsum</Text>
+        <View style={styles.segmentTitle}>
+          <Text style={styles.textBold}>{application.title}</Text>
         </View>
         <View style={styles.segment}>
           <Text>Description:</Text>
-          <Text>
-            Lorem ipsum – tekst składający się z łacińskich i quasi-łacińskich
-            wyrazów, mający korzenie w klasycznej łacinie, wzorowany na
-            fragmencie traktatu Cycerona „O granicach dobra i zła” napisanego w
-            45 p.n.e.
-          </Text>
+          <Text>{application.body}</Text>
         </View>
-        <Pressable style={styles.pressableApplication}>
+        <Pressable
+          onPress={openApplicationComment}
+          style={styles.pressableApplication}
+        >
           <Text>Comments</Text>
         </Pressable>
         <View style={styles.segment}>
           <Text>End date of voting:</Text>
-          <Text>13.09.2022</Text>
+          <Text>
+            {application.endVoteDateTime.split("T")[0]}{" "}
+            {application.endVoteDateTime.split("T")[1]}
+          </Text>
         </View>
         <View style={styles.segment}>
           <Text>Question:</Text>
-          <Text>
-            Czy utwór "Lorem ipsum" powinien być przetłumaczony na języki inne
-            niż łaciński?
-          </Text>
+          <Text>{application.question}</Text>
           <Pressable
             onPress={() => setSelected(true)}
             style={styles.voteOption}
           >
-            {agreeSelected ? (
-              <Icon name="radio-button-checked" />
-            ) : (
-              <Icon name="radio-button-unchecked" />
-            )}
+            {showsAgreebutton()}
             <Text>Agree</Text>
           </Pressable>
           <Pressable
             onPress={() => setSelected(false)}
             style={styles.voteOption}
           >
-            {agreeSelected ? (
-              <Icon name="radio-button-unchecked" />
-            ) : (
-              <Icon name="radio-button-checked" />
-            )}
+            {showDisagreebutton()}
             <Text>Disagree</Text>
           </Pressable>
         </View>
         <Pressable onPress={submitVote} style={styles.pressableApplication}>
           <Text>Submit</Text>
         </Pressable>
-        <Text> Applications Details id: {route.params.id}</Text>
       </View>
     </>
   );
@@ -102,13 +139,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
   },
-  segmentCenter: {
+  segmentTitle: {
     width: "90%",
     padding: 10,
     margin: 5,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
+  },
+  warning: {
+    color: "red",
+    fontWeight: "bold",
   },
   segment: {
     width: "90%",

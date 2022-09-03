@@ -51,7 +51,7 @@ export function CalendarTab() {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
           <HeaderComponent title="Calendar" />
           <Calendar
@@ -113,5 +113,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  scrollContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    height: 400,
   },
 });

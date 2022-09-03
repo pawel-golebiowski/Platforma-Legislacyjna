@@ -4,10 +4,11 @@ import {
   LOGOUT_USER,
   GET_API,
   UPDATE_APPLICATIONS,
+  UPDATE_FAQS,
 } from "./actions";
 
 const apiUrl = {
-  url: "http://16e9-157-158-168-178.ngrok.io",
+  url: "http://f9f7-157-158-168-178.ngrok.io",
 };
 
 const urlReducer = (state = apiUrl, action) => {
@@ -58,6 +59,17 @@ const userReducer = (state = userInitState, action) => {
   }
 };
 
+const FAQInitState = {};
+
+const FAQreducer = (state = FAQInitState, action) => {
+  switch (action.type) {
+    case UPDATE_FAQS:
+      return { ...state, FAQ: action.FAQs };
+    default:
+      return state;
+  }
+};
+
 const applicationInitState = {};
 
 const applicationReducer = (state = applicationInitState, action) => {
@@ -70,6 +82,7 @@ const applicationReducer = (state = applicationInitState, action) => {
 };
 
 const allReducer = combineReducers({
+  FAQreducer: FAQreducer,
   userReducer: userReducer,
   urlReducer: urlReducer,
   applicationReducer: applicationReducer,

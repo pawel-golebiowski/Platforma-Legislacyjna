@@ -1,6 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-web";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { AppBoot } from "./AppBoot";

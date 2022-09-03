@@ -3,7 +3,7 @@ import { Text, SafeAreaView, View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
 import { CalendarTab } from "./Tabs/CalendarTab";
-import { FAQTab } from "./Tabs/FAQTab";
+import { FAQTab } from "./Tabs/FAQ/FAQTab";
 import { ApplicationsStackNavigator } from "./Tabs/ApplicationsTabs/ApplicationsStackNavigator";
 import { ForumHomeScreen } from "./Tabs/ForumTabs/ForumHomeScreen";
 

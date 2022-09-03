@@ -6,7 +6,7 @@ import { Tab } from "react-native-elements";
 import Tabs from "./source/Tabs";
 import { useSelector } from "react-redux";
 import { LoginPage } from "./source/LoginPage";
-import { EmptyPage } from "./source/EmptyPage";
+import { RegisterPage } from "./source/RegisterPage";
 
 export const AppBoot = () => {
   const Stack = createNativeStackNavigator();
@@ -18,9 +18,12 @@ export const AppBoot = () => {
         {userId ? (
           <Tabs />
         ) : (
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={LoginPage}></Stack.Screen>
-            <Stack.Screen name="Profile" component={EmptyPage}></Stack.Screen>
+          <Stack.Navigator>
+            <Stack.Screen name="Login" component={LoginPage}></Stack.Screen>
+            <Stack.Screen
+              name="Contact Administrator"
+              component={RegisterPage}
+            ></Stack.Screen>
           </Stack.Navigator>
         )}
       </NavigationContainer>

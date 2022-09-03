@@ -2,6 +2,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const GET_API = "GET_API";
 export const UPDATE_APPLICATIONS = "UPDATE_APPLICATIONS";
+export const UPDATE_FAQS = "UPDATE_FAQS";
 
 export const setUser = (userData) => {
   return {
@@ -19,6 +20,13 @@ export const updateApplications = (applications) => {
   return {
     type: UPDATE_APPLICATIONS,
     applications: applications,
+  };
+};
+
+export const updateFAQs = (FAQs) => {
+  return {
+    type: UPDATE_FAQS,
+    FAQs: FAQs,
   };
 };
 

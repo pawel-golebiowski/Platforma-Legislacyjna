@@ -3,10 +3,14 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
-import { setUser, updateApplications } from "../shared/redux/actions";
+import {
+  setUser,
+  updateApplications,
+  updateFAQs,
+} from "../shared/redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
-export function LoginPage() {
+export function LoginPage({ navigation }) {
   const userId = useSelector((state) => state.userReducer.userId);
   const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,10 +18,26 @@ export function LoginPage() {
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
 
-  const testUrlApi = "https://reqres.in/api/posts";
   const apiUrl = useSelector((state) => state.urlReducer.url);
-  const getApplicationsUrl = apiUrl + "/api/Application/getApplications";
   const loginUrl = apiUrl + "/api/Authentication/login";
+  const getApplicationsUrl = apiUrl + "/api/Application/getApplications";
+  const getFAQUrl = apiUrl + "/api/FAQ/getFAQs";
+
+  const setApplications = () => {
+    fetch(getApplicationsUrl)
+      .then((response) => response.json())
+      .then((applicationData) => {
+        dispatch(updateApplications(applicationData));
+      });
+  };
+
+  const setFAQ = () => {
+    fetch(getFAQUrl)
+      .then((response) => response.json())
+      .then((FAQ) => {
+        dispatch(updateFAQs(FAQ));
+      });
+  };
 
   let tryToLogin = () => {
     console.log("tryToLogin method id: " + Math.floor(Math.random() * 1000000));
@@ -25,7 +45,6 @@ export function LoginPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: password }),
-      // body: JSON.stringify({ email: "ewa@gmail.com", password: "aA12345678" }),
     };
     fetch(loginUrl, requestOptions)
       .then((response) => response.json())
@@ -37,12 +56,8 @@ export function LoginPage() {
           setErrorMsg("");
           setSuggetsionMsg("");
           dispatch(setUser(responseData));
-
-          fetch(getApplicationsUrl)
-            .then((response) => response.json())
-            .then((applicationData) => {
-              dispatch(updateApplications(applicationData));
-            });
+          setApplications();
+          setFAQ();
         }
       })
       .catch((error) => {
@@ -52,6 +67,7 @@ export function LoginPage() {
 
   let contactAdministrator = () => {
     console.log("Contact administrator form button!");
+    navigation.navigate("Contact Administrator");
   };
 
   return (
