@@ -41,12 +41,14 @@ export function CalendarTab() {
 
   useEffect(() => {
     let dateConfig = {};
-    applications.map((element) => {
-      let endVoteDate = element.endVoteDateTime.substring(0, 10);
-      dateConfig[endVoteDate] = { marked: true };
-      let configClone = JSON.parse(JSON.stringify(dateConfig));
-      setMarkedDates({ ...markedDates, ...configClone });
-    });
+    if (applications) {
+      applications.map((element) => {
+        let endVoteDate = element.endVoteDateTime.substring(0, 10);
+        dateConfig[endVoteDate] = { marked: true };
+        let configClone = JSON.parse(JSON.stringify(dateConfig));
+        setMarkedDates({ ...markedDates, ...configClone });
+      });
+    }
   }, [applications]);
 
   return (
@@ -68,7 +70,7 @@ export function CalendarTab() {
           {displayApplications.length ? (
             displayApplications.map((application) => (
               <View key={application.id} style={styles.tableCell}>
-                <Text> {application.title}</Text>
+                <Text style={styles.maxWidth}> {application.title}</Text>
                 <Text>
                   {" "}
                   {new Date(application.endVoteDateTime).toLocaleTimeString()}
@@ -87,6 +89,9 @@ export function CalendarTab() {
 }
 
 const styles = StyleSheet.create({
+  maxWidth: {
+    maxWidth: 290,
+  },
   table: {
     marginTop: 16,
     width: "90%",

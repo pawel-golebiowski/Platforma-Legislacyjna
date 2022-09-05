@@ -1,14 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { TextInput } from "react-native";
+import { TextInput, LogBox } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 import {
   setUser,
   updateApplications,
   updateFAQs,
+  updateThreads,
 } from "../shared/redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { Tab } from "react-native-elements";
 
 export function LoginPage({ navigation }) {
   const userId = useSelector((state) => state.userReducer.userId);
@@ -22,7 +24,9 @@ export function LoginPage({ navigation }) {
   const loginUrl = apiUrl + "/api/Authentication/login";
   const getApplicationsUrl = apiUrl + "/api/Application/getApplications";
   const getFAQUrl = apiUrl + "/api/FAQ/getFAQs";
+  const getThreadsUrl = apiUrl + "/api/ForumThread/getThreads";
 
+  LogBox.ignoreAllLogs();
   const setApplications = () => {
     fetch(getApplicationsUrl)
       .then((response) => response.json())
@@ -36,6 +40,14 @@ export function LoginPage({ navigation }) {
       .then((response) => response.json())
       .then((FAQ) => {
         dispatch(updateFAQs(FAQ));
+      });
+  };
+
+  const setThreads = () => {
+    fetch(getThreadsUrl)
+      .then((response) => response.json())
+      .then((threads) => {
+        dispatch(updateThreads(threads));
       });
   };
 
@@ -58,6 +70,7 @@ export function LoginPage({ navigation }) {
           dispatch(setUser(responseData));
           setApplications();
           setFAQ();
+          setThreads();
         }
       })
       .catch((error) => {
@@ -66,12 +79,12 @@ export function LoginPage({ navigation }) {
   };
 
   let contactAdministrator = () => {
-    console.log("Contact administrator form button!");
     navigation.navigate("Contact Administrator");
   };
 
   return (
     <View style={styles.container}>
+      <Text style={styles.titleLogo}>Legislation Project</Text>
       <Text>Email</Text>
       <TextInput
         placeholder="username"
@@ -102,6 +115,11 @@ export function LoginPage({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  titleLogo: {
+    marginBottom: 20,
+    fontSize: 30,
+    fontWeight: "bold",
+  },
   pressable: {
     backgroundColor: "rgb(175,233,233)",
     borderRadius: 8,

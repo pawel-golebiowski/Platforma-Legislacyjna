@@ -5,10 +5,11 @@ import {
   GET_API,
   UPDATE_APPLICATIONS,
   UPDATE_FAQS,
+  UPDATE_THREADS,
 } from "./actions";
 
 const apiUrl = {
-  url: "http://f9f7-157-158-168-178.ngrok.io",
+  url: "http://7725-157-158-168-178.ngrok.io",
 };
 
 const urlReducer = (state = apiUrl, action) => {
@@ -28,6 +29,7 @@ const userInitState = {
   lastName: "",
   phoneNumber: "",
   token: "",
+  isAdmin: false,
 };
 
 const userReducer = (state = userInitState, action) => {
@@ -42,6 +44,7 @@ const userReducer = (state = userInitState, action) => {
         lastName: action.payload_lastName,
         phoneNumber: action.payload_phoneNumber,
         token: action.payload_token,
+        isAdmin: action.payload_isAdmin,
       };
     case LOGOUT_USER:
       return {
@@ -54,6 +57,16 @@ const userReducer = (state = userInitState, action) => {
         phoneNumber: "",
         token: "",
       };
+    default:
+      return state;
+  }
+};
+const forumInitState = [];
+
+const forumReducer = (state = forumInitState, action) => {
+  switch (action.type) {
+    case UPDATE_THREADS:
+      return { ...state, threads: action.threads };
     default:
       return state;
   }
@@ -82,6 +95,7 @@ const applicationReducer = (state = applicationInitState, action) => {
 };
 
 const allReducer = combineReducers({
+  forumReducer: forumReducer,
   FAQreducer: FAQreducer,
   userReducer: userReducer,
   urlReducer: urlReducer,

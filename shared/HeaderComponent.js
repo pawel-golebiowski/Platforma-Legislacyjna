@@ -23,6 +23,11 @@ export function HeaderComponent(props) {
     <>
       <Header
         style={styles.header}
+        leftComponent={{
+          icon: "person",
+          color: "#fff",
+          onPress: handleLogout,
+        }}
         centerComponent={{
           text: props.title ? props.title : "Enter custom title",
         }}

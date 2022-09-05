@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ApplicationDetails } from "./ApplicationDetails";
 import { ApplicationsHomeScreen } from "./ApplicationsHomeScreen";
-import { NavigationContainer } from "@react-navigation/native";
 import { AddApplication } from "./AddApplication";
 import { ApplicationComments } from "./ApplicationComments";
 

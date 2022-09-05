@@ -19,7 +19,11 @@ export const AppBoot = () => {
           <Tabs />
         ) : (
           <Stack.Navigator>
-            <Stack.Screen name="Login" component={LoginPage}></Stack.Screen>
+            <Stack.Screen
+              name="Login"
+              options={{ headerShown: false }}
+              component={LoginPage}
+            ></Stack.Screen>
             <Stack.Screen
               name="Contact Administrator"
               component={RegisterPage}

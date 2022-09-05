@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements";
 import { CalendarTab } from "./Tabs/CalendarTab";
 import { FAQTab } from "./Tabs/FAQ/FAQTab";
 import { ApplicationsStackNavigator } from "./Tabs/ApplicationsTabs/ApplicationsStackNavigator";
-import { ForumHomeScreen } from "./Tabs/ForumTabs/ForumHomeScreen";
+import { ForumStackNavigator } from "./Tabs/ForumTabs/ForumStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +30,7 @@ export default function Tabs() {
           tabBarIcon: () => <Icon name="forum" />,
         }}
         name="Forum"
-        component={ForumHomeScreen}
+        component={ForumStackNavigator}
       />
       <Tab.Screen
         options={{

@@ -21,19 +21,38 @@ export function ApplicationsHomeScreen({ navigation }) {
     });
   };
 
+  const compareEndDate = (a, b) => {
+    if (a.endVoteDateTime > b.endVoteDateTime) return -1;
+    if (a.endVoteDateTime === b.endVoteDateTime) return 0;
+    if (a.endVoteDateTime < b.endVoteDateTime) return 1;
+  };
+
   let renderApplications = () => {
     let recordApplications = [];
     if (applications) {
+      applications.sort(compareEndDate);
       applications.map((record) => {
+        const today = new Date();
+        const endDate = new Date(record.endVoteDateTime);
+        const hasEnded = endDate < today;
         return recordApplications.push(
           <Pressable
             key={record.id}
             onPress={() => {
               openApplication(record);
             }}
-            style={styles.pressableApplication}
+            style={
+              hasEnded
+                ? styles.pressableEndedApplication
+                : styles.pressableApplication
+            }
           >
-            <Text>{record.title}</Text>
+            <Text style={styles.textBold}>{record.title}</Text>
+            <Text style={styles.endVoteDateTime}>End time:</Text>
+            <Text style={styles.endVoteDateTime}>
+              {record.endVoteDateTime.split("T")[0]}{" "}
+              {record.endVoteDateTime.split("T")[1]}
+            </Text>
           </Pressable>
         );
       });
@@ -55,6 +74,15 @@ export function ApplicationsHomeScreen({ navigation }) {
   );
 }
 const styles = StyleSheet.create({
+  textBold: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  endVoteDateTime: {
+    marginLeft: 8,
+    justifyContent: "flex-start",
+    alignSelf: "flex-start",
+  },
   btnAddApplication: {
     position: "absolute",
     bottom: 20,
@@ -69,7 +97,16 @@ const styles = StyleSheet.create({
   pressableApplication: {
     backgroundColor: "#2089DC",
     padding: 6,
-    height: 50,
+    maxHeight: 120,
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 5,
+  },
+  pressableEndedApplication: {
+    backgroundColor: "#777777",
+    padding: 6,
+    maxHeight: 120,
     width: "90%",
     justifyContent: "center",
     alignItems: "center",
