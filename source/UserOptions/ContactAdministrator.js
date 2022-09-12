@@ -3,17 +3,13 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { TextInput } from "react-native";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
-export function RegisterPage() {
+export function ContactAdministrator() {
   const [email, emailSet] = useState("");
-  const [password, passwordSet] = useState("");
-  const [passwordConfirm, passwordConfirmSet] = useState("");
   const [firstName, firstNameSet] = useState("");
   const [lastName, lastNameSet] = useState("");
   const [additionalInfo, additionalInfoSet] = useState("");
 
   const [emailError, emailErrorSet] = useState("");
-  const [passwordError, passwordErrorSet] = useState("");
-  const [passwordConfirmError, passwordConfirmErrorSet] = useState("");
   const [firstNameError, firstNameErrorSet] = useState("");
   const [lastNameError, lastNameErrorSet] = useState("");
 
@@ -23,16 +19,6 @@ export function RegisterPage() {
       emailErrorSet("Email too short");
       isError = true;
     } else emailErrorSet("");
-
-    if (password.length < 8) {
-      passwordErrorSet("Password too short");
-      isError = true;
-    } else passwordErrorSet("");
-
-    if (password != passwordConfirm) {
-      passwordConfirmErrorSet("Passwords are different");
-      isError = true;
-    } else passwordConfirmErrorSet("");
 
     if (firstName.length < 3) {
       firstNameErrorSet("Email too short");
@@ -47,7 +33,11 @@ export function RegisterPage() {
     if (isError) {
       alert("Form invalid");
     } else {
-      console.log("form send!");
+      alert("form send!");
+      emailSet("");
+      firstNameSet("");
+      lastNameSet("");
+      additionalInfoSet("");
     }
   };
 
@@ -77,28 +67,6 @@ export function RegisterPage() {
               value={email}
             />
             <Text style={styles.warning}>{emailError}</Text>
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Password *</Text>
-            <TextInput
-              placeholder="Password"
-              style={styles.input}
-              onChangeText={passwordSet}
-              value={password}
-            />
-            <Text style={styles.warning}>{passwordError}</Text>
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputLabel}>Confirm Password *</Text>
-            <TextInput
-              placeholder="Confirm Password"
-              style={styles.input}
-              onChangeText={passwordConfirmSet}
-              value={passwordConfirm}
-            />
-            <Text style={styles.warning}>{passwordConfirmError}</Text>
           </View>
 
           <View style={styles.inputContainer}>
@@ -138,8 +106,14 @@ export function RegisterPage() {
             onPress={() => submitForm()}
             style={styles.pressableApplication}
           >
-            <Text>Add Application</Text>
+            <Text>Contact Administrator</Text>
           </Pressable>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
         </View>
       </ScrollView>
     </>
@@ -200,6 +174,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 16,
   },
+
   container: {
     flex: 1,
     backgroundColor: "#fff",

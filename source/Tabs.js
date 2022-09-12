@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, SafeAreaView, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
 import { CalendarTab } from "./Tabs/CalendarTab";

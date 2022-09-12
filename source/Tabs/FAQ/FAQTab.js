@@ -16,6 +16,8 @@ export function FAQTab() {
   const postFAQUrl = apiUrl + "/api/FAQ/createFAQ";
 
   const userToken = useSelector((state) => state.userReducer.token);
+  const isAdmin = useSelector((state) => state.userReducer.isAdmin);
+
   let FAQs = [];
   FAQs = useSelector((state) => state.FAQreducer.FAQ);
   const dispatch = useDispatch();
@@ -121,14 +123,18 @@ export function FAQTab() {
 
         <ScrollView>
           {renderAddQuestionDialog()}
-          <Pressable
-            onPress={addQuestionBtnClick}
-            style={styles.pressableApplication}
-          >
-            <Text>
-              {showAddQuestionDialog ? "Post question" : "Add question"}
-            </Text>
-          </Pressable>
+          {isAdmin ? (
+            <Pressable
+              onPress={addQuestionBtnClick}
+              style={styles.pressableApplication}
+            >
+              <Text>
+                {showAddQuestionDialog ? "Post question" : "Add question"}
+              </Text>
+            </Pressable>
+          ) : (
+            <Text></Text>
+          )}
           <View style={styles.paddingBottom}>{renderFAQs()}</View>
         </ScrollView>
       </View>

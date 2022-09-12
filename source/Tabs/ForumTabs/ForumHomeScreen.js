@@ -1,13 +1,21 @@
 import React from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { Icon } from "react-native-elements";
-
+import { updateThreads } from "../../../shared/redux/actions";
 import { HeaderComponent } from "../../../shared/HeaderComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Pressable from "react-native/Libraries/Components/Pressable/Pressable";
 
 export function ForumHomeScreen({ navigation }) {
   const apiUrl = useSelector((state) => state.urlReducer.url);
+  const userToken = useSelector((state) => state.userReducer.token);
+  const isAdmin = useSelector((state) => state.userReducer.isAdmin);
+
+  const dispatch = useDispatch();
+
+  const deleteThreadUrl = apiUrl + "/api/ForumThread/deleteThread";
+  const getThreadsUrl = apiUrl + "/api/ForumThread/getThreads";
+
   let threads = [];
   threads = useSelector((state) => state.forumReducer.threads);
 
@@ -29,6 +37,30 @@ export function ForumHomeScreen({ navigation }) {
       } else {
         thread.lastCommentDate = thread.createDateTime;
       }
+    });
+  };
+
+  const setThreads = () => {
+    fetch(getThreadsUrl)
+      .then((response) => response.json())
+      .then((threads) => {
+        dispatch(updateThreads(threads));
+        threads = useSelector((state) => state.forumReducer.threads);
+      });
+  };
+
+  const deleteThread = (id) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + userToken,
+      },
+    };
+
+    fetch(deleteThreadUrl + "?forumThreadId=" + id, requestOptions).then(() => {
+      alert("Thread deleted!");
+      setThreads();
     });
   };
 
@@ -55,14 +87,29 @@ export function ForumHomeScreen({ navigation }) {
             >
               <Text style={styles.threadTitle}>{record.title}</Text>
               <View style={styles.threadAdditionalInfo}>
-                <Text>created: {record.createDateTime.slice(0, 10)}</Text>
+                <Text>
+                  Created:{"               "}{" "}
+                  {record.createDateTime.slice(0, 10)}
+                </Text>
                 <View style={styles.inRow}>
+                  {isAdmin ? (
+                    <Pressable onPress={() => deleteThread(record.id)}>
+                      <Icon
+                        color={"red"}
+                        style={styles.deleteIcon}
+                        name="delete"
+                      />
+                    </Pressable>
+                  ) : (
+                    <Text></Text>
+                  )}
                   <Icon name="chat" />
-
                   <Text> {record.forumComments.length + 1}</Text>
                 </View>
               </View>
-              <Text>Last comment: {record.lastCommentDate.slice(0, 10)}</Text>
+              <Text>
+                Last comment: {"  "} {record.lastCommentDate.slice(0, 10)}
+              </Text>
             </Pressable>
           </>
         );
@@ -91,6 +138,9 @@ export function ForumHomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  deleteIcon: {
+    marginRight: 5,
+  },
   addNewThreadBtn: {
     borderRadius: 3,
     padding: 8,

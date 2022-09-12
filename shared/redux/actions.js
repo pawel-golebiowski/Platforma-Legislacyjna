@@ -4,6 +4,21 @@ export const GET_API = "GET_API";
 export const UPDATE_APPLICATIONS = "UPDATE_APPLICATIONS";
 export const UPDATE_FAQS = "UPDATE_FAQS";
 export const UPDATE_THREADS = "UPDATE_THREADS";
+export const UPDATE_SHOW_USER_OPTIONS = "UPDATE_SHOW_USER_OPTIONS";
+
+export const showUserOptions = () => {
+  return {
+    type: UPDATE_SHOW_USER_OPTIONS,
+    payload_show: true,
+  };
+};
+
+export const hideUserOptions = () => {
+  return {
+    type: UPDATE_SHOW_USER_OPTIONS,
+    payload_show: false,
+  };
+};
 
 export const setUser = (userData) => {
   return {

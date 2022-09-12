@@ -6,10 +6,11 @@ import {
   UPDATE_APPLICATIONS,
   UPDATE_FAQS,
   UPDATE_THREADS,
+  UPDATE_SHOW_USER_OPTIONS,
 } from "./actions";
 
 const apiUrl = {
-  url: "http://7725-157-158-168-178.ngrok.io",
+  url: "http://e286-157-158-168-178.ngrok.io",
 };
 
 const urlReducer = (state = apiUrl, action) => {
@@ -19,6 +20,14 @@ const urlReducer = (state = apiUrl, action) => {
     default:
       return state;
   }
+};
+
+const userOptionsShow = false;
+
+const userOptionsReducer = (state = userOptionsShow, action) => {
+  if (action.type == UPDATE_SHOW_USER_OPTIONS) {
+    return { ...state, userOptionsShow: action.payload_show };
+  } else return state;
 };
 
 const userInitState = {
@@ -98,6 +107,7 @@ const allReducer = combineReducers({
   forumReducer: forumReducer,
   FAQreducer: FAQreducer,
   userReducer: userReducer,
+  userOptionsReducer: userOptionsReducer,
   urlReducer: urlReducer,
   applicationReducer: applicationReducer,
 });

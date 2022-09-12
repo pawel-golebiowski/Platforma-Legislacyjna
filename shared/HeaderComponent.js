@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Header } from "react-native-elements";
 import { Text, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import { logout } from "./redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { hideUserOptions, logout, showUserOptions } from "./redux/actions";
 
 const styles = StyleSheet.create({
   header: {
@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
 export function HeaderComponent(props) {
   const dispatch = useDispatch();
 
+  const isShown = useSelector(
+    (state) => state.userOptionsReducer.userOptionsShow
+  );
+
+  const handleShowUserOptions = () => {
+    isShown ? dispatch(hideUserOptions()) : dispatch(showUserOptions());
+  };
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -24,9 +32,9 @@ export function HeaderComponent(props) {
       <Header
         style={styles.header}
         leftComponent={{
-          icon: "person",
+          icon: isShown ? "menu" : "settings",
           color: "#fff",
-          onPress: handleLogout,
+          onPress: handleShowUserOptions,
         }}
         centerComponent={{
           text: props.title ? props.title : "Enter custom title",

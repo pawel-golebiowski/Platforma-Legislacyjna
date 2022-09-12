@@ -105,9 +105,6 @@ export function LoginPage({ navigation }) {
       <Pressable onPress={tryToLogin} style={styles.pressable}>
         <Text>Login</Text>
       </Pressable>
-      <Pressable onPress={contactAdministrator} style={styles.pressable}>
-        <Text>Contact administrator</Text>
-      </Pressable>
 
       <StatusBar style="auto" />
     </View>

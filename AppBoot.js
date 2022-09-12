@@ -6,29 +6,25 @@ import { Tab } from "react-native-elements";
 import Tabs from "./source/Tabs";
 import { useSelector } from "react-redux";
 import { LoginPage } from "./source/LoginPage";
-import { RegisterPage } from "./source/RegisterPage";
+import { UserOptionsStackNavigator } from "./source/UserOptions/UserStackNavigator";
 
 export const AppBoot = () => {
-  const Stack = createNativeStackNavigator();
   const userId = useSelector((state) => state.userReducer.userId);
+  const showUserOptions = useSelector(
+    (state) => state.userOptionsReducer.userOptionsShow
+  );
 
   return (
     <>
       <NavigationContainer>
         {userId ? (
-          <Tabs />
+          showUserOptions ? (
+            <UserOptionsStackNavigator />
+          ) : (
+            <Tabs />
+          )
         ) : (
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              options={{ headerShown: false }}
-              component={LoginPage}
-            ></Stack.Screen>
-            <Stack.Screen
-              name="Contact Administrator"
-              component={RegisterPage}
-            ></Stack.Screen>
-          </Stack.Navigator>
+          <LoginPage />
         )}
       </NavigationContainer>
     </>
